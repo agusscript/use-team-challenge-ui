@@ -75,6 +75,11 @@ function boardReducer(state: BoardData | null, action: BoardAction): BoardData |
         const newCards = [...column.cards]
         const [movedCard] = newCards.splice(sourceIndex, 1)
 
+        if (!movedCard) {
+          console.warn("No card found to move. Check indexes.")
+          return state
+        }
+
         if (movedCard.id !== cardId) {
           console.warn("Card ID mismatch.")
           return state
@@ -94,13 +99,13 @@ function boardReducer(state: BoardData | null, action: BoardAction): BoardData |
         const sourceCards = [...sourceColumn.cards]
         const [movedCard] = sourceCards.splice(sourceIndex, 1)
 
-        if (movedCard.id !== cardId) {
-          console.warn("Card ID mismatch.")
+        if (!movedCard) {
+          console.warn("No card found to move. Check indexes.")
           return state
         }
 
-        if (!movedCard) {
-          console.warn("No card found to move. Check indexes.")
+        if (movedCard.id !== cardId) {
+          console.warn("Card ID mismatch.")
           return state
         }
 
